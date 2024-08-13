@@ -1,7 +1,4 @@
-# RdC - Università
-Progetto Reti di Calcolatori
-
-Traccia - Università
+# Progetto Reti di Calcolatori - Università
 
 Scrivere un'applicazione client/server parallelo per gestire gli esami universitari
 
