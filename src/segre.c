@@ -20,7 +20,11 @@ void* gestisciRichiesta(void* arg) {
     struct sockaddr_in server_addr_universita;
 
     // Leggi la richiesta dallo studente
-    read(client_socket, buffer, BUFFER_SIZE);
+    if (read(client_socket, buffer, BUFFER_SIZE) < 0) {
+        perror("Errore nella lettura della richiesta");
+        close(client_socket);
+        pthread_exit(NULL);
+    }
 
     // Creazione del socket per la connessione con il server universitario
     if ((sock_universita = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
@@ -46,16 +50,26 @@ void* gestisciRichiesta(void* arg) {
     }
 
     // Invia la richiesta al server universitario
-    send(sock_universita, buffer, strlen(buffer), 0);
+    if (send(sock_universita, buffer, strlen(buffer), 0) < 0) {
+        perror("Errore nell'invio della richiesta al server universitario");
+        close(sock_universita);
+        close(client_socket);
+        pthread_exit(NULL);
+    }
 
     // Ricevi la risposta dal server universitario
     int len = read(sock_universita, risposta, BUFFER_SIZE);
-    if (len > 0) {
+    if (len < 0) {
+        perror("Errore nella lettura della risposta dal server universitario");
+        risposta[0] = '\0'; // Risposta vuota in caso di errore
+    } else {
         risposta[len] = '\0';
     }
 
     // Invia la risposta del server universitario allo studente
-    send(client_socket, risposta, strlen(risposta), 0);
+    if (send(client_socket, risposta, strlen(risposta), 0) < 0) {
+        perror("Errore nell'invio della risposta allo studente");
+    }
 
     close(sock_universita);
     close(client_socket);
@@ -69,10 +83,13 @@ void gestisciInputTerminale() {
 
     while (1) {
         // Chiedi all'utente di inserire un comando
-        printf("Inserisci un comando per aggiungere un esame (formato: <nome_esame> <data_esame>): ");
+        printf("\nInserisci un esame (formato: <nome_esame> <data_esame>): ");
         buffer[0] = 'A';
         buffer[1] = ' ';
-        fgets(&buffer[2], sizeof(buffer) - 2, stdin);
+        if (fgets(&buffer[2], sizeof(buffer) - 2, stdin) == NULL) {
+            perror("Errore nella lettura dell'input");
+            continue;
+        }
 
         // Rimuovi il newline finale
         buffer[strcspn(buffer, "\n")] = 0;
@@ -100,13 +117,21 @@ void gestisciInputTerminale() {
         }
 
         // Invia il comando al server universitario
-        send(sock_universita, buffer, strlen(buffer), 0);
+        if (send(sock_universita, buffer, strlen(buffer), 0) < 0) {
+            perror("Errore nell'invio del comando al server universitario");
+            close(sock_universita);
+            continue;
+        }
 
         // Ricevi la risposta dal server universitario
         int len = read(sock_universita, buffer, BUFFER_SIZE);
-        if (len > 0) {
+        if (len < 0) {
+            perror("Errore nella lettura della risposta dal server universitario");
+        } else {
             buffer[len] = '\0';
-            printf("Risposta dal server universitario: %s\n", buffer);
+            printf("\n---------------------------------------------------------------\n");
+            printf("Risposta dal server universitario: %s", buffer);
+            printf("---------------------------------------------------------------\n");
         }
 
         close(sock_universita);
@@ -140,6 +165,10 @@ int main() {
         perror("Errore nell'ascolto");
         exit(EXIT_FAILURE);
     }
+
+    printf("\n---------------------------------------------------------------\n");
+    printf("SEGRETERIA\n");
+    printf("---------------------------------------------------------------\n");
 
     // Creazione di un thread per gestire l'input da terminale
     pthread_t terminal_thread;

@@ -58,41 +58,52 @@ int main() {
     char dataEsame[BUFFER_SIZE] = {0};
     char matricola[11] = {0};
     
+    printf("\n----------------------------------------------------------------------------\n");
+    printf("CLIENT STUDENTE");
+    printf("\n----------------------------------------------------------------------------\n\n");
+    
     printf("Inserisci la matricola: ");
     fgets(matricola, sizeof(matricola), stdin);
+    printf("\n----------------------------------------------------------------------------\n");
     matricola[strcspn(matricola, "\n")] = '\0'; // Rimuove il newline alla fine della stringa
     if (strlen(matricola) > 10) {
-        fprintf(stderr, "La matricola non può superare i 10 caratteri.\n");
+        fprintf(stderr, "La matricola non puÃ² superare i 10 caratteri.\n");
         exit(EXIT_FAILURE);
     }
     
     while (1) {
-        printf("Cosa desideri fare?\n");
+        printf("\nCosa desideri fare?\n\n");
         printf("1) Richiedi informazioni su un esame\n");
         printf("2) Prenota un esame\n");
         printf("3) Esci\n");
-        printf("Scelta: ");
+        printf("\nScelta: ");
         scanf("%d", &scelta);
         getchar(); // Assorbire il newline lasciato da scanf
 
         switch (scelta) {
             case 1:
-                printf("Inserisci il nome dell'esame: ");
+                printf("\n----------------------------------------------------------------------------\n");
+                printf("\nInserisci il nome dell'esame: ");
                 fgets(nomeEsame, sizeof(nomeEsame), stdin);
                 nomeEsame[strcspn(nomeEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa
-
+                printf("\n");
+                printf("Appelli: ");
                 inviaRichiestaAllaSegreteria('I', matricola, nomeEsame, NULL);
+                printf("----------------------------------------------------------------------------\n");
                 break;
             case 2:
+                printf("\n----------------------------------------------------------------------------\n\n");
                 printf("Inserisci il nome dell'esame: ");
                 fgets(nomeEsame, sizeof(nomeEsame), stdin);
                 nomeEsame[strcspn(nomeEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa
+                printf("\n");
 
                 printf("Inserisci la data d'appello (formato: gg/mm/aaaa): ");
                 fgets(dataEsame, sizeof(dataEsame), stdin);
                 dataEsame[strcspn(dataEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa
-
+                printf("\n");
                 inviaRichiestaAllaSegreteria('P', matricola, nomeEsame, dataEsame);
+                printf("----------------------------------------------------------------------------\n");
                 break;
             case 3:
                 printf("Uscita...\n");
