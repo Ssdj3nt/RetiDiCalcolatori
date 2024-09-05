@@ -1,9 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <arpa/inet.h>
-#include <time.h>
+#include <stdio.h> // Fornisce funzioni per l'input/output.
+#include <stdlib.h> // Libreria che include funzioni per la gestione della memoria dinamica
+#include <string.h> // Libreria per la manipolazione di stringhe
+#include <unistd.h> // Fornisce l'accesso alle system-call su sistemi UNIX.
+#include <arpa/inet.h> // Libreria per la gestione delle connessioni di rete su sistemi UNIX.
+#include <time.h> // Include la libreria per funzioni relative al tempo
 
 #define PORT 8080                           // Porta su cui il server ascolta le connessioni
 #define BUFFER_SIZE 1024                    // Dimensione BUFFER
