@@ -53,24 +53,25 @@ void inviaRichiestaAllaSegreteria(char tipoRichiesta, char *matricola, char *nom
 }
 
 int main() {
-    int scelta;
-    char nomeEsame[BUFFER_SIZE] = {0};
-    char dataEsame[BUFFER_SIZE] = {0};
-    char matricola[11] = {0};
+    int scelta; //Variabile usata per contenere la scelta dell'utente, in base alla scelta si effettueranno specifiche operazioni.
+    char nomeEsame[BUFFER_SIZE] = {0}; //Vettore che conterrà il nome dell'esame.
+    char dataEsame[BUFFER_SIZE] = {0}; //Vettore che conterrà la data dell'esame.
+    char matricola[11] = {0}; //Vettore che conterrà la matricola dello studente.
     
     printf("\n----------------------------------------------------------------------------\n");
     printf("CLIENT STUDENTE");
     printf("\n----------------------------------------------------------------------------\n\n");
     
     printf("Inserisci la matricola: ");
-    fgets(matricola, sizeof(matricola), stdin);
+    fgets(matricola, sizeof(matricola), stdin);//Login simulato attraverso l'inserimento della matricola.
     printf("\n----------------------------------------------------------------------------\n");
-    matricola[strcspn(matricola, "\n")] = '\0'; // Rimuove il newline alla fine della stringa
+    matricola[strcspn(matricola, "\n")] = '\0'; // Rimuove il newline alla fine della stringa.
     if (strlen(matricola) > 10) {
-        fprintf(stderr, "La matricola non puÃ² superare i 10 caratteri.\n");
+        fprintf(stderr, "La matricola non può superare i 10 caratteri.\n");
         exit(EXIT_FAILURE);
     }
-    
+
+    //Menù grafico.
     while (1) {
         printf("\nCosa desideri fare?\n\n");
         printf("1) Richiedi informazioni su un esame\n");
@@ -78,36 +79,36 @@ int main() {
         printf("3) Esci\n");
         printf("\nScelta: ");
         scanf("%d", &scelta);
-        getchar(); // Assorbire il newline lasciato da scanf
+        getchar(); // Assorbire il newline lasciato da scanf.
 
         switch (scelta) {
             case 1:
                 printf("\n----------------------------------------------------------------------------\n");
                 printf("\nInserisci il nome dell'esame: ");
-                fgets(nomeEsame, sizeof(nomeEsame), stdin);
-                nomeEsame[strcspn(nomeEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa
+                fgets(nomeEsame, sizeof(nomeEsame), stdin); // Inserimento del nome dell'esame.
+                nomeEsame[strcspn(nomeEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa.
                 printf("\n");
                 printf("Appelli: ");
-                inviaRichiestaAllaSegreteria('I', matricola, nomeEsame, NULL);
+                inviaRichiestaAllaSegreteria('I', matricola, nomeEsame, NULL);// Richiesta informazioni sugli appelli disponibili.
                 printf("----------------------------------------------------------------------------\n");
                 break;
             case 2:
                 printf("\n----------------------------------------------------------------------------\n\n");
                 printf("Inserisci il nome dell'esame: ");
-                fgets(nomeEsame, sizeof(nomeEsame), stdin);
-                nomeEsame[strcspn(nomeEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa
+                fgets(nomeEsame, sizeof(nomeEsame), stdin); // Inserimento del nome dell'esame.
+                nomeEsame[strcspn(nomeEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa.
                 printf("\n");
 
                 printf("Inserisci la data d'appello (formato: gg/mm/aaaa): ");
-                fgets(dataEsame, sizeof(dataEsame), stdin);
-                dataEsame[strcspn(dataEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa
+                fgets(dataEsame, sizeof(dataEsame), stdin); // Inserimento della data dell'appello a cui ci si vuole prenotare.
+                dataEsame[strcspn(dataEsame, "\n")] = 0; // Rimuove il newline alla fine della stringa.
                 printf("\n");
-                inviaRichiestaAllaSegreteria('P', matricola, nomeEsame, dataEsame);
+                inviaRichiestaAllaSegreteria('P', matricola, nomeEsame, dataEsame); // Invio della prenotazione alla Segreteria.
                 printf("----------------------------------------------------------------------------\n");
                 break;
             case 3:
                 printf("Uscita...\n");
-                exit(0);
+                exit(0); // Chiusura del client.
             default:
                 printf("Scelta non valida. Riprova.\n");
         }
