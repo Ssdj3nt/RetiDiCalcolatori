@@ -1,5 +1,5 @@
 #include <stdio.h> // Fornisce funzioni per l'input/output.
-#include <stdlib.h>  // Libreria che include funzioni per la gestione della memoria dinamica
+#include <stdlib.h>  // Libreria che include funzioni per la gestione della memoria dinamica.
 #include <string.h> // Libreria per la manipolazione di stringhe.
 #include <unistd.h> // Fornisce l'accesso alle system-call su sistemi UNIX.
 #include <arpa/inet.h> // Libreria per la gestione delle connessioni di rete su sistemi UNIX.
