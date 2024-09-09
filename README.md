@@ -6,19 +6,19 @@ Gruppo 1 studente:
 
 Segreteria:
 
-    Inserisce gli esami sul server dell'università (salvare in un file o conservare in memoria il dato).
-    Inoltra la richiesta di prenotazione degli studenti al server universitario.
-    Fornisce allo studente le date degli esami disponibili per l'esame scelto dallo studente.
+    * Inserisce gli esami sul server dell'università (salvare in un file o conservare in memoria il dato).
+    * Inoltra la richiesta di prenotazione degli studenti al server universitario.
+    * Fornisce allo studente le date degli esami disponibili per l'esame scelto dallo studente.
 
 Studente:
 
-    Chiede alla segreteria se ci siano esami disponibili per un corso.
-    Invia una richiesta di prenotazione di un esame alla segreteria.
+    * Chiede alla segreteria se ci siano esami disponibili per un corso.
+    * Invia una richiesta di prenotazione di un esame alla segreteria.
 
 Server universitario:
 
-    Riceve l'aggiunta di nuovi esami.
-    Riceve la prenotazione di un esame.
+    * Riceve l'aggiunta di nuovi esami.
+    * Riceve la prenotazione di un esame.
 
 Gruppo 2 studenti:
 
